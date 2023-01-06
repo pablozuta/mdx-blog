@@ -25,7 +25,7 @@ a {
 }
 
 nav {
-  padding-bottom: 2rem;
+  margin-bottom: 4rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -34,6 +34,9 @@ nav {
 .home {
   letter-spacing: 0.5rem;
 }
-.home:hover {
-  border-bottom: 1px solid palevioletred;
+
+
+.blog-title{
+  border-bottom: 2px solid palevioletred;
+ 
 }

@@ -9,9 +9,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>Blog</title>
       </Head>
-      <nav>
+      <nav className="blog-title">
         <h3 className="home"> <Link href="/">HOME</Link></h3>
-        <h2>Neon Dreams BLOG</h2>
+        
       </nav>
       <Component {...pageProps} />
     </div>
