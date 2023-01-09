@@ -8,7 +8,7 @@ export default function Home({ posts }: { posts: PostMeta[] }) {
       <h1>Articles</h1>
       <Articles posts={posts} />
       
-      <Articles posts={posts} />
+     
     </>
   );
 }

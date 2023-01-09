@@ -7,10 +7,13 @@ export default function Articles({ posts }: { posts: PostMeta[] }) {
     <ul className={styles.list}>
       {posts.map((post) => (
         <li key={post.slug}>
-          <div className={styles.title}>
+          <h2 className={styles.title}>
+         
             <Link href={`/posts/${post.slug}`}>{post.title}</Link>
-          </div>
+          </h2>
+          
           <p>{post.excerpt}</p>
+          <p className="fecha-post">{post.date}</p>
           <p className={styles.tags}>
             {post.tags.map((tag) => (
               <Link key={tag} href={`/tags/${tag}`}>
@@ -18,8 +21,11 @@ export default function Articles({ posts }: { posts: PostMeta[] }) {
               </Link>
             ))}
           </p>
+        
         </li>
+       
       ))}
+      
     </ul>
   );
 }

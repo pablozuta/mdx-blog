@@ -36,7 +36,21 @@ nav {
 }
 
 
-.blog-title{
-  border-bottom: 2px solid palevioletred;
- 
+.barra-navegacion-iconos {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.imagen-logo:hover{
+  cursor: pointer;
+}
+.fecha-post{
+  color: bisque;
+  font-size: 15px;
+  width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+ /*  text-overflow: ellipsis; */
 }
