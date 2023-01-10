@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@300&display=swap");
 * {
   box-sizing: border-box;
 }
@@ -41,8 +41,6 @@ nav {
 .barra-navegacion {
   border-bottom: 2px solid gray;
 }
-
-
 
 .imagen-logo:hover {
   cursor: pointer;
