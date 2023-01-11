@@ -14,7 +14,7 @@
 
 .tags {
   font-size: 0.95rem;
-  
+  color: mediumaquamarine;
 }
 .tags a:after {
   content: " . ";
