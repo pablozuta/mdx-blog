@@ -1,0 +1,86 @@
+---
+title: Python Libraries for Data Science 
+date: 12-01-2023
+---
+
+## Matplotlib
+
+#### Visualize Uncertainty
+Another aspect of plotting is the **_degree of uncertainty associated with estimates_.**
+To visualize uncertainty we are going to use what we call **error bars**.
+
+##### Discrete Data
+In the case of discrete data, we often use error bars to represent the uncertainty inherent to each point's value. Often, the length of the bars matches the _standard deviation_ of the _empirical observations_.
+```python
+x = np.linspace(0, 10, 50)
+dy = 0.8
+y = np.sin(x) + dy * np.random.randn(50)
+plt.errorbar(x, y, yerr=dy, fmt='.k');
+plt.show()
+```
+`Errorbar` takes as argument the x-coordinates, y-coordinates and lengths of each bar (one bar per point)  `yerr` . Note the  `fmt`  argument. It allows you to choose the color (here black) and the shape of the markers on the graph in a really concise way.  `Errorbar`  also allows you to further customize the appearance of the graph.
+```python
+x = np.linspace(0, 10, 50)
+dy = 0.8
+y = np.sin(x) + dy * np.random.randn(50)
+plt.errorbar(x, y, yerr=dy, fmt='o', color="black",
+			ecolor='lightgray', elinewidth=3, capsize=0);
+```
+
+### Customize your plots
+Up to this point, we have been constructing plots from the ground up, but you can actually use a set of _preconfigured_ properties called **styles**.
+ let's print the first six styles that we have.
+ ```python
+ print(plt.style.available[:6])
+fig = plt.figure(figsize=(12, 8))
+for i in range(6):
+    fig.add_subplot(3, 2, i + 1)
+    plt.style.use(plt.style.available[i])
+    plt.plot(x, y)
+    plt.text(s=plt.style.available[i], x=5, y=2, color='red')
+```
+
+## Explore your data visually with Seaborn
+==Seaborn  is a library that improves Matplotlib's functionality, replaces some default settings and functions, and adds new features.==
+
+Seaborn was created to correct three **defects of Matplotlib.** As a standalone, Matplotlib:
+
+-   Can't generate graphics of high aesthetic quality (especially in pre 2.0 versions).
+    
+-   Lacks the functionality to easily create sophisticated statistical analyses.
+    
+-   Features functions that aren't designed to interact with Panda Dataframes (which we will see in the next chapter).
+    
+
+Luckily, Seaborn addresses these problems! It still uses Matplotlib "under the hood", but does so by exposing more intuitive functions.
+```python
+import seaborn as sns
+sns.set()
+x = np.linspace(0, 10, 500)
+y = np.random.randn(500)
+plt.plot(x,y)
+plt.show()
+```
+Seaborn also provides us with functions to generate useful plots for statistical analysis. For example,`distplot` lets you not only view the histogram of a sample, but also estimate the distribution from which the sample is derived.
+```python
+sns.distplot(y, kde=True);
+plt.show()
+```
+
+As I mentioned, ==Seaborn is really good at visualizing relationships and helping us draw insights from our data. What we will do now is demonstrate Seaborn's capacities using a very simple dataset called "Iris". This dataset is popular in introductory stats classes.==
+
+It contains 150 rows done on 3 different plant species. Each row is an observation of a certain species of plant. The observation contains quantitive columns including length and width of its sepals and petals.
+```python
+iris = sns.load_dataset('iris')
+iris.head()
+```
+We can actually visualize the _relationship_ between all these variables using a powerful function in Seaborn called `.pairplot`.
+Conveniently, you only need one line of code to do this with Seaborn! We simply need to pass "Iris" as the data parameter, set the hue to _species_, and the size to _2.5_.
+```python
+sns.pairplot(iris, hue='species', height=2.5);
+plt.show()
+```
+
+
+
+
