@@ -11,12 +11,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div className="container">
       <Head>
-        <title>Blog</title>
+        <title>Blog && Notes</title>
       </Head>
       <nav className="barra-navegacion">
         <h1 className="home blog-title">
          
-          <Link href="/">BLOG</Link>
+          <Link href="/">BLOG && NOTES</Link>
         </h1>
 
       
