@@ -6,6 +6,7 @@ tags:
   - matplotlib
   - data science
 date: 12-01-2023
+excerpt: Python has gained a lot of traction over the years in the field of Data Analytics. It's easy-to-learn, free to install, and has many libraries designed for quick and easy data manipulation such as Pandas, Matplotlib, and NumPy. 
 ---
 
 ## NumPy
@@ -169,5 +170,85 @@ Conveniently, you only need one line of code to do this with Seaborn! We simply
 ```python
 sns.pairplot(iris, hue='species', height=2.5);
 plt.show()
+```
+
+
+----
+## Manipulate data contained in DataFrames
+Now that you know how to create a DataFrame, let's look at some other common data operations. To do this, I suggest you use a DataSet available in the Seaborn library! The dataset in question includes data on the survivors of the Titanic.
+
+In this chapter, we'll follow a "typical" working session.
+```python
+import numpy as np
+import pandas as pd
+import seaborn as sns
+titanic = sns.load_dataset('titanic')
+```
+The first thing to do is to take a quick look at our data.
+```python
+print(titanic.head())
+```
+The  tail  function is the counterpart of the  `head`  function. It displays the latest elements of the DataFrame.
+```python
+print(titanic.tail())
+```
+Now, try looking at all ages. The  `unique`  function returns the unique values present in a Pandas data structure.
+```python
+print(titanic.age.unique())
+```
+I should also mention the excellent  `describe`  function. It provides various statistics (average, maximum, minimum, etc.) on the data in each column:
+```python
+print(titanic.describe(include="all"))
+```
+You might have noticed  `NaN` values in the `describe`  function.  NaN literally stands for **Not a Number** and is used to represent a value that is undefined or unrepresentable. For example, we obtain  `NaN`  if we ask Pandas to calculate the average of a column of text.
+The first is to replace  `NaN`  with other values. This operation is performed using the  `fillna`  function. Let's look at its application on the `age` column:
+
+```python
+titanic.fillna(value={"age": 0}).age.head(10)
+```
+We could also have filled the  `NaN`  with the previous values:
+```python
+titanic.fillna(method="pad").age.head(10)
+```
+Secondly, the  `dropna`  function let's you delete axes (columns or rows) that contain  `NaN`  . By default, it deletes the relevant lines:
+```python
+titanic.dropna().head(10)
+```
+But we can also delete the columns altogether!
+```python
+titanic.dropna(axis="columns").head()
+```
+### Renaming a column
+Use the `rename`  function to rename the columns or rows of a DataFrame. You can do this in two ways.
+```python
+titanic.rename(columns={"sex":"gender"})
+```
+### Delete axes
+The  `drop`  function allows you to delete axes (columns or rows) from a DataFrame.
+```python
+# Will delete the line with an index equal to 0.
+titanic.drop(0)
+
+# Deletes the "age" column.
+titanic.drop(columns=["age"])
+```
+### Pivot tables
+Before you get into relational algebra, let's have a look at pivot tables. You may be familiar with this concept if, for example you have used them in spreadsheet software. These tables are used to synthesize the data in a DataFrame. Again, let's use our Titanic dataset as an example.
+
+To see the distribution of survivors by gender and ticket type, we only need one line:
+```python
+titanic.pivot_table('survived', index='sex', columns='class')
+```
+By default,  `pivot_table`  groups the data according to the criteria we specify, and aggregates the results on average. We can also specify other functions. For example, if we want to know the total number of survivors in each case, we can use the sum function.
+```python
+titanic.pivot_table('survived', index='sex', columns='class', aggfunc="sum")
+```
+Of course, this only works because the dataset's authors have wisely opted to represent survival with 0s and 1s!
+
+`pivot_table`  is a very powerful function that also allows for multi-level aggregations. For example, we can see the age of survivors as an additional dimension. As the exact number of years is of little interest to us, we can group the ages into three categories, thanks to the  `cut`  function.
+```python
+titanic.dropna(inplace=True)
+age = pd.cut(titanic['age'], [0, 18, 80])
+titanic.pivot_table('survived', ['sex', age], 'class')
 ```
 
