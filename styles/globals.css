@@ -52,3 +52,16 @@ nav {
   overflow: hidden;
   /*  text-overflow: ellipsis; */
 }
+
+.tagcolor > a {
+  color: rgb(235, 217, 194);
+  font-size: 0.95rem;
+}
+
+.tags a:after {
+  content: " - ";
+  
+}
+.tags a:last-child:after {
+  content: "";
+}

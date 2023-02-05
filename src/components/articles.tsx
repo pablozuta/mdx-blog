@@ -14,7 +14,7 @@ export default function Articles({ posts }: { posts: PostMeta[] }) {
           
           <p>{post.excerpt}</p>
           <p className="fecha-post">{post.date}</p>
-          <p className={styles.tags}>
+          <p className="tags tagcolor">
             {post.tags.map((tag) => (
               <Link key={tag} href={`/tags/${tag}`}>
                 {tag}
