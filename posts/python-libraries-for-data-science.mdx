@@ -251,4 +251,266 @@ titanic.dropna(inplace=True)
 age = pd.cut(titanic['age'], [0, 18, 80])
 titanic.pivot_table('survived', ['sex', age], 'class')
 ```
+----
+## Apply relational algebra operations on DataFrames
 
+### Relational algebra
+
+Relational algebra is a theory for manipulating data that's in **table form**, which is perfect because a DataFrame is a table! We use relational algebra to define the operations on tables; operations that can be  grouped into 5 main categories:
+
+-   Projection and restriction
+-   Set operations (union, difference, intersection)
+-   Cartesian product
+-   Join
+-   Aggregation
+
+### Pandas data structures
+Pandas has two fundamental data structures, the  `Series`  and the  `DataFrame`  . These structures can be seen as a generalization of NumPy's tables and matrices.
+The key difference between these and NumPy's versions is that Pandas' objects have explicit indexes.
+Let's start with a reminder of how we create these structures and then use them for some basic operations.
+```python
+import numpy as np
+import pandas as pd
+# We can create a series from a lit
+data = pd.Series([0.25, 0.5, 0.75, 1.0])
+print("data looks like a numpy array: ", data)
+
+# We can manually specify indexes
+data = pd.Series([0.25, 0.5, 0.75, 1.0],        
+                index=['a', 'b', 'c', 'd'])
+print("data looks like a Python dict: ", data)
+
+print(data['b'])
+# We can create a Series directly from a dict:
+population_dict = {'California': 38332521,
+                    'Texas': 26448193,
+                    'New York': 19651127,               
+                    'Florida': 19552860,                  
+                    'Illinois': 12882135}
+area_dict = {'California': 423967,
+            'Texas': 695662,
+            'New York': 141297,
+            'Florida': 170312,
+            'Illinois': 149995}
+
+population = pd.Series(population_dict)
+area = pd.Series(area_dict)
+print(population)
+# What do you think of this line?
+print(population['California':'Florida'])
+```
+Just as operations on NumPy arrays are faster than those on Python lists,  `Series`  operations are faster than those on dicts.
+
+`DataFrames`  allow you to combine several  `Series`  into columns, much like in an SQL table. Building a  `DataFrame`  is easy:
+```python
+# From a Series
+df = pd.DataFrame(population, columns=['population'])
+print(df)
+
+# From a list of dict
+data = [{'a': i, 'b': 2 * i} for i in range(3)]
+df = pd.DataFrame(data)
+print(df)
+
+# From several Series
+df = pd.DataFrame({'population': population,
+                    'area': area})
+print(df)
+
+# From a 2-dimensional Numpy array
+df = pd.DataFrame(np.random.rand(3, 2),
+                columns=['foo', 'bar'],
+                index=['a', 'b', 'c'])
+print(df)
+
+# A function to easily generate DataFrames. It will be very 
+# useful in the rest of this chapter.
+def make_df(cols, ind):    
+    """Quickly create DataFrames"""
+    data = {c: [str(c) + str(i) for i in ind]
+            for c in cols}
+    return pd.DataFrame(data, ind)
+    
+# example
+make_df('ABC', range(3))
+```
+### Projection and restriction
+The first 2 operations of relational algebra are very simple. Projection is a selection of certain columns and restriction is a selection of certain rows.
+
+We can refer to the elements of the Pandas objects by using either their implicit indexes (like we do with Numpy arrays) or explicit indexes (as in the dicts). To avoid confusion, it is advisable to use the  `loc`  (which refers by index) and  `iloc`  (which refers by position) attributes of each object.
+```python
+data = pd.Series([0.25, 0.5, 0.75, 1.0],
+                index=['a', 'b', 'c', 'd'])
+print(data)
+
+print(data.loc['b'])
+print(data.iloc[1])
+```
+The difference between the two should be clear after executing these lines. We perform these same operations on  `DataFrames`  in a similar way:
+```python
+data = pd.DataFrame({'area':area, 'pop':population})
+print(data)
+data.loc[:'Illinois', :'pop']
+```
+
+### Union
+One of the simplest operations in relational algebra is data  `union` . That is uniting two tables to create a third, which contains all the rows of both the first and the second!
+
+Here, we're interested in the union of  `Series`  or  `DataFrame`. With Pandas, this operation is carried out using `pd.concat`.
+```python
+ser1 = pd.Series(['A', 'B', 'C'], index=[1, 2, 3])
+ser2 = pd.Series(['D', 'E', 'F'], index=[4, 5, 6])
+pd.concat([ser1, ser2])
+```
+For a  `Series`, this seems easy. But for a  `DataFrame`?
+```python
+df1 = make_df('AB', [1, 2])
+df2 = make_df('AB', [3, 4])
+pd.concat([df1, df2])
+```
+By default,`pd.concat`  assembles its arguments "vertically". To change this orientation, we can use the  `axis`  argument.
+
+#### Use indexes
+
+Concatenation preserves the indexes! So if the two DataFrames given in arguments have common indexes, the final result will have **duplicate** indexes.
+
+This is often a problem. To compensate for this, you can use hierarchical indexes.
+
+```python
+x = make_df('AB', [0, 1])
+y = make_df('AB', [2, 3])
+y.index = x.index  
+# Same indexes
+
+print(pd.concat([x, y]))
+# We can ask for hierarchical indexes
+hdf = pd.concat([x, y], keys=['x', 'y'])
+print(hdf)
+```
+
+### Join
+
+ Another very useful function to manipulate Dataframes is  `pd.merge`, which allows you to join DataFrames.
+
+A join is assembles information from one table **A** with that from another table B according to a chosen criterion. This criterion is called the **join condition**. This condition is composed of one or more columns that are common to A and B.
+
+Here is a quick example to help explain. Let's imagine that we have two Dataframes:
+
+-   `df1`  containing a list of employees and the names of the departments in which they work,
+-   `df2`  containing the same list of employees and their dates of entry into the company.
+    
+
+The  `pd.merge`  function allows us to transform these two Dataframes into one, containing both information.
+```python
+df1 = pd.DataFrame({
+    'employee': ['Bob', 'Jake', 'Lisa', 'Sue'],
+    'department': ['Accounting','Engineering','Engineering', 'HR']})
+                    
+df2 = pd.DataFrame({
+    'employee': ['Lisa', 'Bob', 'Jake', 'Sue'],
+    'date': [2004, 2008, 2012, 2014]})
+    
+df3 = pd.merge(df1, df2)
+```
+#### Cardinality
+
+When performing a join, always pay attention to the cardinality of the relationship between A and B in order to avoid certain errors.
+`pd.merge` make no distinction between these 3 cardinalities: it is used in exactly the same way in all 3 cases.
+##### One-to-one
+
+The example we looked at earlier corresponds to a **one-to-one cardinality**. Indeed, an employee works in only one department, and has only one year of employment.
+```python
+df1 = pd.DataFrame({
+    'employee': ['Bob', 'Jake', 'Lisa', 'Sue'],
+    'department': ['Accounting', 'Engineering','Engineering', 'HR']})
+df2 = pd.DataFrame({
+    'employee': ['Lisa', 'Bob', 'Jake', 'Sue'],
+    'date': [2004, 2008, 2012, 2014]})
+                    
+df3 = pd.merge(df1, df2)
+df3
+```
+
+##### One-to-Many, or many-to-one
+
+Now we want to add another column. Each department has a head. This information is contained in a Dataframe. We want to add a column to  `df3`  to add each employees head of department.
+
+This is a one-to-many cardinality. Indeed,  `df3`  represents employees and  `df4`  represents department heads. An employee has only one department head, but one department head can lead several employees.
+```python
+df4 = pd.DataFrame({'department': ['Accounting', 'Engineering', 
+                                    'HR'],
+                    'supervisor': ['Carly', 'Guido', 'Steve']})
+pd.merge(df3, df4)
+```
+##### Many-to-many
+
+To continue with our example, let's suppose we have another Dataframe containing the necessary skills needed to work in each department:
+```python
+df5 = pd.DataFrame({'department': ['Accounting', 'Accounting',
+                                    'Engineering', 'Engineering', 
+                                    'HR', 'HR'],    
+                    'competence': ['math', 'spreadsheets', 'coding',
+                                    'linux',
+                                    'spreadsheets',
+                                    'organization']})
+```
+#### Outer join
+
+Let's take  `df1`  again and add Lea, an employee in the Engineering department. Let's call this new dataframe  `df6` . However, we do not add Lea to  `df2`  :
+```python
+df6 = pd.DataFrame({'employee': ['Bob', 'Jake', 'Lisa',
+                                 'Sue', 'Lea'],                    
+                    'department': ['Accounting', 'Engineering',
+                                   'Engineering', 'HR',
+                                   'Engineering']})
+
+df2 = pd.DataFrame({'employee': ['Lisa', 'Bob', 'Jake', 'Sue'],
+                    'date': [2004, 2008, 2012, 2014]})
+```
+### Cartesian product
+
+We can use merge to perform another relational algebra operation, the Cartesian product.
+```python
+# We add a new column to df1 and df2, which always contains
+# the same value, 0.
+df1['key'] = 0
+df2['key'] = 0
+
+produit_cartesien = pd.merge(df1, df2, on='key')
+# We drop the key column
+produit_cartesien.drop('key',1, inplace=True)
+```
+### Aggregation
+Like with NumPy arrays, we can easily perform operations on all the elements of a Series or Dataframe, such as  `sum`  or  `mean`  :
+```python
+rng = np.random.RandomState(42)
+# A series with five random elements
+ser = pd.Series(rng.rand(5))
+print(ser.sum())
+print(ser.mean())
+```
+These calculations are possible for a Dataframe, and are performed per column by default:
+```python
+df = pd.DataFrame({'A': rng.rand(5),
+                   'B': rng.rand(5)})
+
+# Per column
+print(df.mean())
+# Per row
+print(df.mean(axis='columns'))
+```
+Pandas allows us to perform group aggregation, which similar to using the  `GROUP BY`  keyword in SQL.
+```python
+df = pd.DataFrame({'key': ['A', 'B', 'C', 'A', 'B', 'C'],   
+                   'data1': range(6),
+                   'data2': [10,11,10,9,10,10]})
+print(df)
+```
+If we want to calculate the sum of the columns  `data1`  and  `data2`, and calculate the average of just  `data2`  alone, it is possible to select the necessary columns on our object gb:
+```python
+s = gb['data1','data2'].sum()
+m = gb['data2',].mean()
+
+groupped = pd.concat([s,m], axis=1)
+groupped.columns = ["data1_somme","data2_somme","data2_moyenne"]
+```
