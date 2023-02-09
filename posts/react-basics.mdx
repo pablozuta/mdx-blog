@@ -684,3 +684,131 @@ The math prop is there to show that you can add arithmetic operators and numbers
 The str prop is there to show that you can concatenate strings, as well as strings and variables – which is shown by adding string literals of “ another ” and “string” to the str1 variable.
 
 In summary, just like you can use expressions inside function components, you can also use them as prop values inside JSX elements, when rendering those function components.
+
+
+----
+# Week 2
+### Eventful issues
+React can work with most of the same events found in HTML, although React handles them differently.
+This means that you may encounter unfamiliar errors when you run your event-driven React code.
+
+**Event Errors**
+When you work in any programming environment, language, or framework, you are bound to write code that throws errors, for a variety of reasons.
+The JavaScript language comes with a built-in error handling syntax, the **try...catch** syntax.
+Let’s examine an example of an error in JavaScript:
+```JSX
+(5).toUpperCase()
+```
+Obviously, you cannot uppercase a number value, and thus, this throws the following error:
+```
+Uncaught TypeError: 5.toUpperCase is not a function
+```
+To handle this TypeError, you can update the code with a try...catch block that instructs the code to continue running after the error is encountered:
+```JSX
+try {
+    (5).toUpperCase();
+}
+catch(e) {
+    console.log('Oops, you can't uppercase a number. 
+        Trying to do it resulted in the following', e)
+}
+```
+The try-catch block will output some text in the console:
+```
+Oops, you can't uppercase a number. Trying to do it resulted in the following TypeError: 5.toUpperCase is not a function**
+```
+here's an example of a simple error in a React component:
+```JSX
+function NumBillbooard(props) {
+    return (
+    <>
+    <h1>{prop.num}</h1>
+    </>
+    )
+}
+export default NumBillboard;
+```
+In React, an error in the code, such as the one above, will result in the error overlay showing in the app in the browser.
+In this specific example, the error would be:
+
+ReferenceError
+prop is not defined
+Note: _You can click the X button to close the error overlay._
+
+Since event-handling errors occur after the UI has already been rendered, all you have to do is use the error-handling mechanism that already exists in JavaScript – that is, you just use the try...catch blocks.
+
+----
+### Event handling and embedded expressions
+In this reading, you’ll learn the different ways to embed expressions in event handlers in React:
+
+-   With an inline anonymous ES5 function 
+-   With an inline, anonymous ES6 function (an arrow function)     
+-   Using a separate function declaration 
+-   Using a separate function expression 
+  
+
+You may find this reading useful as a reference sheet.
+
+For clarity and simplicity: a function will simply console log some words. This will allow you to compare the difference in syntax between these four approaches, while the result of the event handling will always be the same: just some words output to the console.
+
+**Handling events using inline anonymous ES5 functions**
+
+This approach allows you to directly pass in an ES5 function declaration as the onClick event-handling attribute’s value:
+```JSX
+<button onClick={function() {console.log('a message')}}>
+  This is an inline anonymous ES5 function event handler
+</button>
+```
+**Handling events using inline anonymous ES6 functions (arrow functions)**
+
+With this approach, you can directly pass in an ES6 function declaration as the onClick event-handling attribute’s value:
+```JSX
+<button onClick={() => console.log('another message 😉')}>
+An inline anonymous ES6 function event handler
+</button>
+
+```
+**Handling events using separate function declarations**
+
+With this approach, you declare a separate ES5 function declaration, and then you reference its name in the event-handling onClick attribute, as follows:
+```JSX
+function App() {
+    function thirdExample() {
+    console.log('a message inside an external function')}
+};
+    return (
+        <div className="thirdExample">
+            <button onClick={thirdExample}>
+                using a separate function declaration
+            </button>
+        </div>
+    );
+};
+
+export default App;
+```
+This syntax makes sense to be used when your onClick logic is too complex to easily fit into an anonymous function. While this example is not really showing this scenario, imagine a function that has, for example, 20 lines of code, and that needs to be ran when the click event is triggered. This is a perfect use-case for a separate function declaration.
+
+**Handling events using separate function expressions**
+
+**Tip**_:_ A way to determine if a function is defined as an expression or a declaration is: if it does not start the line with the keyword function, then it’s an expression.
+In the following example, you’re assigning an anonymous ES6 arrow function to a const variable – hence, this is a function expression.
+You’re then using this const variable’s name to handle the onClick event, so this is an example of handling events using a separate function expression.
+```JSX
+function App() {
+    const handleEvent = () => console.log('have a nice day');
+    return (
+        <div className="fourth">
+        <button onClick={handleEvent}>
+        Using a separate function Expression
+        </button>
+        </div>
+  
+)
+}
+export default App;
+```
+The syntax in this example is very common in React. It uses arrow functions, but also allows us to handle situations where our separate function expression spans multiple lines of code.
+
+----
+
