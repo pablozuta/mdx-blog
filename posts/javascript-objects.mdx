@@ -1,0 +1,111 @@
+---
+title: JavaScript Objects 
+tags:
+  - javascript
+  - fundamentals
+  - programming
+date: 14-02-2023
+excerpt: In JavaScript, an object is an unordered collection of key-value pairs. Each key-value pair is called a property. 
+---
+
+To get to the firstname property of the object contained in the author property of the book object, you can use the following lines of code:
+```js
+console.log(book.author.firstName);
+```
+Using the square brackets notation
+```js
+console.log(book['author']['lastname']);
+```
+#### Calling and object's methods
+You know a method is just a property that happens to be a function, so you access methods in the same way in which you would access properties–using the dot notation or using
+square brackets. Calling (invoking) a method is the same as calling any other function – you just add parentheses after the method name, which effectively says Execute!:
+```go
+const heroTwo = {
+  breed: 'Turtle',
+  occupation: 'Ninja',
+  say: function () {
+  return 'I am' + hero.occupation;
+  }
+};
+console.log(hero.say());
+```
+#### Altering properties/methods
+JavaScript allows you to alter the properties and methods of existing objects at any time.This includes adding new properties or deleting them. You can start with a blank object and
+add properties later. Let's see how you can go about doing this.
+```go
+let ninja = {};
+```
+this object is not really empty and useless. Although at this stage it has no properties of its own, it has already inherited some.
+**Adding two properties and a method:**
+```go
+ninja.breed = 'Turtle';
+ninja.name = 'Leonardo';
+ninja.sayName = function () {
+  return ninja.name;
+};
+```
+**Calling the method**
+```go
+console.log(ninja.sayName());
+```
+#### Using the this value
+In the previous example, the sayName() method used hero.name to access the name property of the hero object. When you're inside a method though, there is another way to access the object the method belongs to. This method is using the special value this:
+```go
+let turtle = {
+  name: 'Rafaelo',
+  sayName: function () {
+    return this.name};
+};
+console.log(turtle.sayName());
+```
+So, when you say this, you're actually saying–this object or the current object.
+
+----
+_Eloquent JavaScript_ Pg-97
+### The Secret Life of Objects
+The core idea in object-oriented programming is to divide programs into smaller pieces and make each piece responsible for managing its own state.
+Different pieces of such a program interact with each other through interfaces, limited sets of functions or bindings that provide useful functionality at a more abstract level, hiding their precise implementation.
+Such program pieces are modeled using objects. **Their interface consists of a specific set of methods and properties**. Properties that are part of the interface are called public. The others, which outside code should not be touching, are
+called private.
+Separating interface from implementation is a great idea. It is usually called **encapsulation.**
+
+#### Methods
+Methods are nothing more than properties that hold function values. This is a simple method:
+```js
+let rabbit = {};
+rabbit.speak = function(line) {
+  console.log(`The rabbit say '${line}'`);
+};
+rabbit.speak("I'm Alive.");
+```
+When a function is called as a method the binding called **this** in its body automatically points at the object that it was called on.
+```js
+function speak(line) {
+console.log(`The ${this.type} rabbit says '${line}'`);
+}
+let whiteRabbit = {type: "white", speak};
+let hungryRabbit = {type: "hungry", speak};
+
+whiteRabbit.speak("Oh my ears and whiskers, " +
+				 "how late it's getting!");
+hungryRabbit.speak("I can use a carrot right now.");				 
+```
+Since each function has its own this binding, whose value depends on the way it is called, you cannot refer to the this of the wrapping scope in a regular function defined with the function keyword.
+
+### Prototypes
+Watch closely
+```js
+let empty = {};
+console.log(empty.toString);
+console.log(empty.toString());
+```
+In addition to their set of properties, most objects
+also have a prototype. A prototype is another object that is used as a fallback source of properties. When an object gets a request for a property that it does not have, its prototype will be searched for the property, then the prototype’s prototype, and so on.
+**So who is the prototype of that empty object? It is the great ancestral prototype, the entity behind almost all objects, Object.prototype.**
+```js
+console.log(Object.getPrototypeOf({}) == Object.prototype);
+```
+As you guess, Object.getPrototypeOf returns the prototype of an object.
+The prototype relations of JavaScript objects form a tree-shaped structure,and at the root of this structure sits Object.prototype. It provides a few methods that show up in all objects, such as toString, which converts an object to a string representation.
+
+
