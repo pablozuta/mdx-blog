@@ -812,3 +812,150 @@ The syntax in this example is very common in React. It uses arrow functions, but
 
 ----
 
+### Data Flow in React
+
+A React app consists of many components, organized as a component tree. The data flows from the root component to all the components in the tree structure that require this data, using props.
+
+Props are immutable (cannot be changed).
+The two main benefits of this unidirectional data flow are that it allows developers to:
+
+1.  comprehend the logic of React apps more quickly and 
+2.  simplify the data flow. 
+
+Here’s a practical example of this:
+
+Imagine that the parent component passes a prop (name) to the child component. The child component then uses this prop to render the name in the UI.
+**Parent Component**
+```JSX
+function Dog() {
+    return (
+      <Puppy name="Max" bowlShape="square" bowlStatus="full") />
+      );
+};
+```
+**Child Component**
+```JSX
+function Puppy(props) {
+    return (
+    <div>
+    {props.name} has <Bowl bowlShape="square" bowlStatus="full" />
+    </div>
+    )
+}
+```
+**GrandChild Component**
+```JSX
+function Bowl(props) {
+    return (
+    <span>
+    {props.bowlShape}-shaped bowl, and it's currently {props.bowlStatus}
+    </span>
+    )
+}
+```
+
+Having data move through props in only one direction makes it simpler to understand the logic of how the components interact. If data were moving everywhere, all the time, then it would be much harder to comprehend its logical flow.
+
+### Using Hooks
+Let’s say you have a component with an input text field. The user can type into this text field. The component needs to keep track of what the user types within this text field. You can add state and use the useState hook, to hold the string.
+
+As the user keeps typing, the local state that holds the string needs to get updated with the latest text that has been typed.
+
+Let's discuss the below example.
+```JSX
+import {useState} from 'react';
+
+export default function InputComponent() {
+    const [inputText, setInputText] = useState("Hello");
+
+    function handleChange(e) {
+        setInputText(e.target.value);
+        }
+    return (
+    <>
+    <input value={inputText} onChange={handleChange} />
+    <p>You Typed: {inputText}</p>
+    <button onClick={() => setInputText("Hello")}>
+    RESET
+    </button>
+    </>
+    );
+}
+```
+let’s extend the previous example, to include three input text fields within a single component. This could be a registration form with fields for first name, last name and email.
+
+```JSX
+import { useState } from 'react';
+
+export default function RegisterForm() {
+    const [form, setForm] = useState({
+    firstName: "Luke",
+    lastName: "Jones",
+    email: "lukejones@gmail.com",
+    });
+    return (
+    <>
+    <label>First Name:
+    <input value={form.firstName}
+    onChange={e => {setForm({...form,
+     firstName: e.target.value
+     })
+     }}/></label>
+      <label> 
+        Last name: 
+        <input 
+          value={form.lastName} 
+          onChange={e => { 
+            setForm({ 
+              ...form, 
+              lastName: e.target.value 
+            }); 
+          }} 
+        /> 
+      </label> 
+
+      <label> 
+        Email: 
+        <input 
+          value={form.email} 
+          onChange={e => { 
+            setForm({ 
+              ...form, 
+              email: e.target.value
+              }); 
+          }} 
+        /> 
+      </label>
+      <p>
+      {form.firstName}{" "}
+      {form.lastName} {" "}
+      ({form.email})
+      </p>
+      </>  
+    );
+}
+```
+You do not need to have three separate state variables in this case, and instead you can consolidate them all together into one form object for better readability.
+
+### The useRef Hook
+We use the useRef hook to access a child element directly.
+
+When you invoke the useRef hook, it will return a ref object. The ref object has a property named current.
+
+```JSX
+function TextInputWithFocusButton() {
+    const inputEl = useRef(null);
+    const onButtonClick = () => {
+    // current points to the mounted text input element
+    inputEl.current.focus()
+    };
+    return(
+    <>
+     <input ref={inputEl} type="text" />
+     <button onClick={onButtonClick}>Focus the input</button>
+     </>
+    );
+}
+```
+Using the ref attribute on the input element, I can then access the current value and invoke the focus() method on it, thereby focusing the input field.
+There are situations where accessing the DOM directly is needed, and this is where the useRef hook comes into play.
