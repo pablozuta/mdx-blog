@@ -1,0 +1,177 @@
+---
+title: Propositional Logic
+tags:
+  - logic
+  - math
+  - programming
+date: 16-02-2023
+excerpt: Propositional logic, also known as sentential logic, is that branch of logic that studies ways of combining or altering statements or propositions to form more complicated statements or propositions.  
+---
+
+
+
+## Propositional Logic
+It is traditional to study logic in stages, and the first stage, propositional logic, is relatively straightforward.
+The idea of being more precise about the rules of argument goes back to the Greek philosopher Aristotle (4th century BCE), with further development by Peter Abelard in the Middle Ages and by Gottfried Leibniz in the 17th century.
+
+----
+### Discrete Mathematics An Open Introduction
+
+3.1- Propositional Logic
+A proposition is simply a statement. Propositional logic studies the ways statements can interact with each other.
+**A statement is any declarative sentence which is either true or false**. A statement is atomic if it cannot be divided into smaller statements, otherwise it is called molecular.
+###### Example0.2.1 
+
+These are statements (in fact, _atomic_ statements):
+
+-   Telephone numbers in the USA have 10 digits.
+    The moon is made of cheese.
+    42 is a perfect square.
+    Every even number greater than 2 can be expressed as the sum of two primes.
+    3+7=12
+You can build more complicated (molecular) statements out of simpler (atomic or molecular) ones using logical connectives . For example, this is a molecular statement:
+- Telephone numbers in the USA have 10 digits and 42 is a perfect square.
+
+5 connectives (AND , OR, If...Then , If and only If, NOT)
+The first four are called **binary connectives** (because they connect two statements) while “not” is an example of a **unary connective** (since it applies to a single statement).
+to analyze logical connectives, it is enough to consider propositional variables (sometimes called _sentential_ variables), usually capital letters in the middle of the alphabet: P,Q,R,S,…. These are variables that can take on one of two values: T or F.
+
+An implication or conditional is a molecular statement of the form
+```
+P→Q
+```
+
+
+where P and Q are statements. We say that
+-   P is the **hypothesis** (or antecedent).
+-   Q is the **conclusion** (or consequent).
+Easily the most common type of statement in mathematics is the conditional, or implication.
+Still, it is important to remember that an implication is a statement, and therefore is either true or false. The truth value of the implication is determined by the truth values of its two parts.
+
+----
+
+### Handbook of the History of Logic Volume 11
+Peirce is concerned to argue that predicate logic encompasses all of logic, subsuming propositional logic under the general heading of quantification theory. Predication is involved in every proposition, even ‘It is raining,’which, he argues, has an indexical subject, and in conditionals, “in the same sense that
+some recognized range of experience or thought is referred to”
+
+Stoic theories of the relatively uncontroversial connectives — conjunction, disjunction,and negation—are surprisingly contemporary in feel. The Stoics characterize these connectives
+semantically, in terms of truth conditions, but also in terms of syntactic axioms or rules intended to capture their inferential behavior. They appear to have a concept of scope that matches our contemporary notion as well as a clear distinction
+between atomic and molecular propositions. _Pg 181_
+
+The central concept of propositional logic is that of a proposition. The Old Logic has a standard definition, taken from Boethius: “propositio est oratio verum falsumve significans”
+(A proposition is a statement signifying truth or falsehood).
+_Pg 192_
+
+Leibniz appears to have been constructing his algebra of concepts and the resulting propositional logic on a foundation independent of late medieval developments.
+_Pg 204_
+
+Logical philosophers generally don’t define the expression “truth-value”, they take its definition for granted, known to everybody who has attended a first course on propositional logic. However if we have a close look at a textbook of logic, it is difficult to find a precise definition of such a notion. Truth-values will appear in the so-called truth tables, as T and F, or 1 and 0. The expression “truth tables” also is generally not explained, but this makes sense as a picture and to put truth in a table may look amusing.
+_Pg 235_
+
+The mechanism of bivalent truth-values can be generalized, this was done right at the beginning by people like Peirce, Post,  Lukasiewicz and Bernays.
+Moreover the notion of truth-value does not reduce to propositional logic. The expression “truth-value semantics” is used as a name for an alternative semantics to first-order logic, but this is not just a question of name, truth-values are also present in the standard Tarskian semantics for first-order logic and also in Kripkean possible worlds semantics, etc. They are in fact everywhere ...
+_Pg 236_
+
+Post was probably the first to isolate propositional logic, developing a systematic theory about it. To do so he was mainly influenced by Principia Mathematica which can be considered as a first step towards propositional logic
+_Pg 270_
+
+It is very interesting to examine the similarities/differences between truth-values in propositional logic and first order logic in the book Model theory by Chang and Keisler first published in 1973. The book of Chang and Keisler is
+emblematic of Tarski’s idea and school. This was the first book on model theory, as Chang and Kreisel themselves state: “up to now no book of this sort has been written” [Chang and Keisler, 1973, p. v].4 This book is symbolic in many senses.
+It is the crystallization of central ideas, not only of model theory, but of modern logic, considering that model theory is the final stage of the development of modern logic (post-modern logic is another story). In particular in model theory the bridge between truth and structure is rigorously established.
+_pg 285_
+
+One of the leading mathematicians of his day, DeMorgan did important work in the foundations of algebra and in mathematical methodology. He was also a pioneer of modern logic, anticipating the algebraic approach to propositional logic of George Boole (1815-1864) and “the logic of relatives” of Charles Peirce (1839-1914).
+_Pg 597_
+
+DeMorgan and his contemporary Boole (1815-1864), mark beginning of the most fateful transition in logic since Aristotle’s invention of the syllogism. Struck by the similarity of the connectives of propositional logic and the operator symbols
+of algebra, DeMorgan was drawn to the idea that logic - that is, logic in what I’ve been calling the narrow sense - might in some way be reducible to mathematics.
+If so, it would be possible without relevant loss to re-express the truths of logic as statements of mathematics.
+_Pg 600_
+
+----
+Mathematical Structures for Computer Science
+
+An argument can be represented in symbolic form as
+```
+P1 ∧ P2 ∧ P3 ∧ … ∧ Pn → Q
+```
+
+
+----
+### Logical Dilemmas : The Life and Work of Kurt Godel
+
+Boole introduced what is known today as propositional logic– the
+formal logic of connectives. Statements involving nested quantifiers remained outside Boole’s domain of analysis because his system was still restricted to monadic predicates. 
+That limitation was later overcome, however, by Charles Sanders Peirce and Ernst Schröder, who built on Boole’s ideas to develop a far-reaching “calculus of relatives” based on a similar algebraic perspective.
+_Pg 40_
+
+In his doctoral dissertation of 1920, Emil Post introduced the method of truth tables as a means of determining which
+propositional formulas were formally derivable within the system of Principia Mathematica. 
+The method is viewed today as a procedure for determining which propositional formulas are tautologies (universally valid statements), but there is some question whether Post so conceived it. His primary concern appears to have been syntactic rather than semantic, as evidenced by his proof that propositional logic is syntactically complete: If any unprovable formula be added to the propositional axioms, inconsistency results.
+_Pg 51_
+
+The opening lecture was given by Menger, who, no doubt to the dismayof the second group of listeners, pointed out some of the inadequacies of traditional logic. In particular, he noted that Aristotelian logic did not suffice to yield all logically true propositions, nor, from among the various inferential laws
+it treated, did it attempt to isolate an independent set from which all the others could be derived. Gödel then announced in the following lecture that the aim of the first part of the course would be “to give, as far as possible, a complete
+theory of logical inferences and logically true propositions and to show how they can be reduced to a certain number of primitive laws.” He went on to develop propositional logic in a systematic and leisurely fashion: After introducing the usual connectives via numerous examples in natural language, he discussed
+truth tables and their realization, gave an axiomatization for propositional logic (essentially derived from Russell) based on four axioms and three rules of inference, and showed that the axioms were independent and sufficed for the deduction of all tautologies.
+_Pg 136_
+
+At the age of seven Emil L. Post (1897–1954) emigrated with his parents from Poland to New York City. After receiving his B.S. in 1917 from City College, to which he returned in 1935 to spend the rest of his career, he went on to Columbia for doctoral
+study; his dissertation (1920) introduced the method of truth tables as a decision procedure for propositional logic. Though his employment and research productivity were severely hampered by his affliction with manic-depression, he nonetheless initiated the study of degrees of recursive unsolvability, introduced notions central to the theory of automata and formal languages, and, independently of Gödel, both recognized the
+incompleteness of Principia Mathematica and proposed the notion of ordinal definability.
+In addition to logic he also published papers in analysis and algebra; the notion of polyadic group is due to him, as is that of what are now called Post algebras.
+_Pg 325_
+
+**Worth Noting : Appendix C , Biographical Vignettes , Pg 321 onwards.**
+
+----
+### Boole Anthology
+
+In this section, I introduce Boole's treatment of propositions partly to underline that he was accepting and developing the Aristotelian approach to logic. The traditional classification
+divided all propositions into categoricals and hypotheticals. "Some snake is a parrot" and "Every star is a planet" are examples of categorical propositions. There are four kinds of categorical propositions : the universal affirmative, the existential affirmative, the universal negative and the existential negative . Categorical proposiuons are
+similar to what we nowadays would treat in a very restricted monadic first-order logic.
+Hypothetical propositions are treated today in propositional logic; they would be described as truth-functional combinations of categorical propositions. For example, "If some star is a planet then no star is a sun" and "Some star is a planet or no star is a planet". Boole and other followers of the Aristotelian tradition, unlike Aristotle hirnself, paid little attention to the logical form of the propositions they were studying; "Socrates is a man" is taken as a universal affirmative categorical proposition. Boole used the equational language ordinarily used in the algebra of his time. Nowhere does he specify it precisely. On the other hand the language that Aristotle used to express the categorical propositions studied in his logic was precisely specified and his study of it was systematic.
+In fact , as far as being precise and systematic is concerned, Boole's logic was in many respects a step backwards from Aristotle. This was just as true of other folIowers and expounders of the Aristotelian tradition , including Whately, who almost never matched Aristotle in this regard . Unwarranted assumptions about the sorts of propositions being considered by Boole have often led his interpreters to misunderstand Boole's
+project.
+_Pg 222_
+
+----
+### The Oxford Handbook of Philosophy of Mathematics and Logic(2005)
+
+Only under quite special conditions, conditions independent of the vast bulk of intuitionistic mathematics, is it provable that propositional logic is complete for single formulas or finite sets of them. It is obviously incomplete when it comes
+to other sets of formulas.
+_Pg 372_
+
+----
+### Wikipedia
+Also called Propositional Calculus
+" It deals with propositions (which can be true or false) and relations between propositions, including the construction of arguments based on them."
+
+A proposition (also called a statement) is a **type of sentence that can be either true or false** (declarative sentence)
+There are other kinds of sentences , interrogative(are you my friend?) , imperative(do that in the right way) and exclamative(that's awesome!)
+[[Logical Connective]] in propositional logic are "and", "or", "not", "if then", "if and only if" , we can write the like this:
+```
+¬P
+P∧Q 
+P∨Q 
+P→Q 
+P↔Q 
+```
+
+
+----
+The words used are 
+- conjunction in the case of AND
+- disjunction in the case of OR
+
+**statements can be combined to form new statements**
+
+---
+[Baeldung](https://www.baeldung.com/cs/propositional-logic)
+
+Statements are the elementary conceptual units upon which logical buildings are build
+**Boolean Logic always applies to propositional logic**
+in the sense that statements must have only one of two values (True or False)
+A paradox in this case is a statement that is True and False at the same time.
+Boolean logic is not intrinsically necessary, but rather a convention. There in fact exist extensions of [fuzzy](https://www.sciencedirect.com/science/article/pii/S1571066105052230) and also of [quantum logic](https://link.springer.com/chapter/10.1007/978-3-540-93802-6_20) to propositional logic
+
