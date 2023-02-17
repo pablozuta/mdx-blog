@@ -15,7 +15,7 @@ export default function Home({ posts }: { posts: PostMeta[] }) {
 
 export async function getStaticProps() {
   const posts = getAllPosts()
-    .slice(0, 9)
+    .slice(0, 19)
     .map((post) => post.meta);
 
   return { props: { posts } };
