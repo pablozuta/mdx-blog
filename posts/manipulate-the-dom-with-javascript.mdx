@@ -1,0 +1,276 @@
+---
+title: 40 Ways To Manipulate The DOM 
+tags:
+  - javascript
+  - fundamentals
+  - dom
+date: 17-03-2023
+excerpt: DOM Manipulation using JavaScript 
+---
+
+  
+### document.getElementById()  
+
+```javascript
+let element = document.getElementById("my-element");  
+```
+
+### document.querySelector()  
+```javascript
+let element = document.querySelector(".my-class");  
+```
+
+### document.querySelectorAll()  
+```javascript
+let elements = document.querySelectorAll(".my-class");  
+```
+
+### element.innerHTML  
+```javascript
+let element = document.getElementById("my-element");  
+element.innerHTML = "<p>Hello World!</p>";  
+```
+
+### element.innerText  
+```javascript
+let element = document.getElementById("my-element");  
+element.innerText = "Hello World!";  
+```
+
+### element.style.property
+```javascript
+let element = document.getElementById("my-element");  
+element.style.backgroundColor = "red";  
+```
+
+### element.classList.add()  
+```javascript
+let element = document.getElementById("my-element");  
+element.classList.add("my-class");  
+```
+
+### element.classList.remove()  
+```javascript
+let element = document.getElementById("my-element");  
+element.classList.remove("my-class");  
+```
+
+### element.classList.toggle()  
+```javascript
+let element = document.getElementById("my-element");  
+element.classList.toggle("my-class");  
+```
+
+element.getAttribute()  
+```javascript
+let element = document.getElementById("my-element");  
+let value = element.getAttribute("data-value");  
+``` 
+
+element.setAttribute()  
+```javascript
+let element = document.getElementById("my-element");  
+element.setAttribute("data-value", "123");  
+```
+
+element.hasAttribute()  
+```javascript
+let element = document.getElementById("my-element");  
+if (element.hasAttribute("data-value")) {  
+// do something  
+}  
+``` 
+
+element.removeAttribute()  
+```javascript
+let element = document.getElementById("my-element");  
+element.removeAttribute("data-value");  
+``` 
+
+element.appendChild()  
+```javascript
+let parent = document.getElementById("my-parent");  
+let child = document.createElement("div");
+parent.appendChild(child);  
+``` 
+ 
+
+element.removeChild()  
+```javascript
+let parent = document.getElementById("my-parent");  
+let child = document.getElementById("my-child");  
+parent.removeChild(child);  
+```
+
+element.replaceChild()  
+```javascript 
+Copy code  
+let parent = document.getElementById("my-parent");  
+let newChild = document.createElement("div");  
+let oldChild = document.getElementById("my-child");  
+parent.replaceChild(newChild, oldChild); 
+```
+
+element.cloneNode()  
+```javascript
+let element = document.getElementById("my-element");  
+let copy = element.cloneNode(true);  
+```
+
+element.addEventListener()  
+```javascript
+let element = document.getElementById("my-element");  
+element.addEventListener("click", function() {  
+// do something  
+});  
+```
+
+element.removeEventListener()  
+```javascript
+let element = document.getElementById("my-element");  
+let listener = function() {  
+// do something  
+};  
+element.addEventListener("click", listener);  
+element.removeEventListener("click", listener);  
+```
+
+event.preventDefault()  
+```javascript
+let link = document.getElementById("my-link");  
+link.addEventListener("click", function(event) {  
+event.preventDefault();  
+});  
+```
+
+event.stopPropagation()  
+```javascript
+let element = document.getElementById("my-element");  
+element.addEventListener("click", function(event) {  
+event.stopPropagation();  
+});  
+``` 
+
+event.target
+```javascript
+let element = document.getElementById("my-element");  
+element.addEventListener("click", function(event) {  
+let target = event.target;  
+});  
+```
+
+window.onload  
+```javascript
+window.onload = function() {  
+// do something  
+};  
+```
+
+window.setTimeout()  
+```javascript
+let timeoutID = window.setTimeout(function() {  
+// do something  
+}, 1000);  
+```
+
+window.setInterval()  
+```javascript
+let intervalID = window.setInterval(function() {  
+// do something  
+}, 1000);  
+``` 
+
+document.createElement()  
+```javascript
+let element = document.createElement("div");  
+```
+
+document.createTextNode()  
+```javascript
+let textNode = document.createTextNode("Hello World!");  
+```
+
+
+element.setAttributeNS()  
+```javascript
+let element = document.getElementById("my-element");  
+element.setAttributeNS("[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)", "x", "10");  
+``` 
+
+element.getBoundingClientRect()  
+```javascript
+let element = document.getElementById("my-element");  
+let rect = element.getBoundingClientRect();  
+console.log(rect.left, rect.top, rect.right, rect.bottom);  
+```
+
+element.scrollIntoView()  
+```javascript
+let element = document.getElementById("my-element");  
+element.scrollIntoView();  
+```
+
+element.scrollIntoViewIfNeeded()  
+```javascript
+let element = document.getElementById("my-element");  
+element.scrollIntoViewIfNeeded();  
+```
+
+element.scrollBy()  
+```javascript
+let element = document.getElementById("my-element");  
+element.scrollBy(0, 100);  
+```
+
+element.scrollTo()  
+```javascript
+let element = document.getElementById("my-element");  
+element.scrollTo(0, 100);  
+```
+
+window.scroll()  
+```javascript
+window.scroll(0, 100);  
+```
+
+window.scrollBy()  
+```javascript
+window.scrollBy(0, 100);  
+```
+
+window.scrollTo()  
+```javascript
+window.scrollTo(0, 100);  
+```
+
+document.createDocumentFragment()  
+```javascript
+let fragment = document.createDocumentFragment();  
+let div1 = document.createElement("div");  
+let div2 = document.createElement("div");  
+fragment.appendChild(div1);  
+fragment.appendChild(div2); 
+```
+ 
+element.insertAdjacentElement()  
+```javascript
+let element = document.getElementById("my-element");  
+let newElement = document.createElement("div");  
+element.insertAdjacentElement("beforebegin", newElement); 
+```
+ 
+element.insertAdjacentHTML()  
+```javascript
+let element = document.getElementById("my-element");  
+element.insertAdjacentHTML("beforeend", "<p>Hello World!</p>");  
+```
+
+element.insertAdjacentText()  
+```javascript
+let element = document.getElementById("my-element");  
+element.insertAdjacentText("Insert This Text")
+```  
+
+
+
+
