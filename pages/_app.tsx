@@ -2,7 +2,7 @@ import type { AppProps } from "next/app";
 import Link from "next/link";
 import Head from "next/head";
 import "@/styles/globals.css";
-import Image from "next/image";
+
 
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>Blog & Notes</title>
       </Head>
       <nav className="barra-navegacion">
-        <h1 className="home blog-title">
+        <h1 className="titulo-blog">
          
           <Link href="/">BLOG & NOTES</Link>
         </h1>
